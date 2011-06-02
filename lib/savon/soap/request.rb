@@ -38,6 +38,8 @@ module Savon
             request.headers[field.name] = field.to_s
           end
           #request.headers["Content-Type"] << %|; start="<savon_soap_xml_part>"|
+          # FIS does not want a charset to be set, so let's remove it
+          request.headers["Content-Type"].gsub!("; charset=UTF-8", "")
           request_message.body.set_sort_order soap.parts_sort_order if soap.parts_sort_order && soap.parts_sort_order.any?
           request.body = request_message.body.encoded
         else
