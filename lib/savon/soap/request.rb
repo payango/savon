@@ -1,5 +1,6 @@
 require "httpi"
 require "savon/soap/response"
+require "savon/log_message"
 
 module Savon
   module SOAP
@@ -53,7 +54,8 @@ module Savon
       def with_logging
         log_request request.url, request.headers, request.body
         response = yield
-        log_response response.code, response.body
+        body_log_message = LogMessage.new(response.body, Savon.filters).to_s
+        log_response response.code, body_log_message
         SOAP::Response.new response
       end
 

@@ -52,6 +52,11 @@ module Savon
       @version ||= SOAP::DefaultVersion
     end
 
+    attr_writer :filters
+    def filters
+      @filters ||= []
+    end
+
     # Returns whether to strip namespaces in a SOAP response Hash.
     # Defaults to +true+.
     def strip_namespaces?
